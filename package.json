@@ -1,21 +1,21 @@
 {
-  "name": "Dynamics-CRM-Bookmarklets",
+  "name": "dynamics-crm-bookmarklets",
   "version": "1.0.0",
-  "description": "",
+  "description": "Bookmarklets for Dynamics CRM",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gotdibbs/Dynamics-CRM-Bookmarklets.git"
+    "url": "git+https://github.com/polshgiant/Dynamics-CRM-Bookmarklets.git"
   },
-  "author": "gotdibbs",
+  "author": "polshgiant",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/gotdibbs/Dynamics-CRM-Bookmarklets/issues"
+    "url": "https://github.com/polshgiant/Dynamics-CRM-Bookmarklets/issues"
   },
-  "homepage": "https://github.com/gotdibbs/Dynamics-CRM-Bookmarklets",
+  "homepage": "https://github.com/polshgiant/Dynamics-CRM-Bookmarklets",
   "devDependencies": {
     "del": "^1.2.0",
     "glob": "^5.0.5",
@@ -33,5 +33,6 @@
     "metalsmith-markdown": "^0.2.1",
     "metalsmith-templates": "^0.7.0",
     "through2": "^2.0.0"
-  }
+  },
+  "dependencies": {}
 }

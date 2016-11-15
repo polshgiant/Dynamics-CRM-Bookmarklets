@@ -1,5 +1,5 @@
 }(
-function (global) {
+    function (global) {
     if (!global.APPLICATION_VERSION) {
         return alert('Could not determine the current version of CRM. Please ensure you\'re viewing a record in Dynamics CRM.');
     }
