@@ -24,20 +24,30 @@ function processFiles(files, snippets, fileFormat) {
         r,
         snippetContents;
 
+    
+    console.log("snippets: ", snippets);
     _.chain(files).filter(function filterToHtml(file, fileName) {
         return path.extname(fileName) === '.html';
     }).each(function (file, fileName) {
         contents = file.contents.toString(fileFormat);
-        matches;
+        //matches;
 
+        console.log("file.page: ", file.page);
+        
         _.each(snippets, function (snippet) {
+            
+            console.log("snippet: ", snippet);
+            
             snippetName = path.basename(snippet, '.js').replace(/-/g, '\\-');
-            r = new RegExp('\\[bookmarklet file=&quot;' + snippetName + '&quot; name=&quot;(.+)&quot; description=&quot;(.+)&quot;\\]', 'gi');
-            snippetContents;
+            r = new RegExp('\\[bookmarklet file=&quot;' + snippetName + 
+                '&quot;[\\s]+name=&quot;(.+)&quot;[\\s]+description=&quot;(.+)&quot;\\]', 'gi');
+            //snippetContents;
 
             matches = r.exec(contents);
 
             if (matches && matches.length === 3) {
+                console.log("matches found");
+
                 snippetContents = fs.readFileSync(snippet, fileFormat);
                 contents = contents.replace(r, template({
                     Script: snippetContents,

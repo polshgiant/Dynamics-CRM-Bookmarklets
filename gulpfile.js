@@ -8,11 +8,21 @@ var _ = require('lodash'),
 
 gulp.task('clean', clean(gulp));
 
-gulp.task('build-bookmarklets', ['clean'], buildBookmarklets(gulp));
+gulp.task('build-bookmarklets', ['clean'], 
+    buildBookmarklets(gulp, 'bookmarklets/', 'bookmarklets/'));
 
-gulp.task('build-launcher', ['clean', 'build-bookmarklets'], buildLauncher(gulp));
+gulp.task('build-bookmarklets-old', ['clean'], 
+    buildBookmarklets(gulp, 'bookmarklets/old/', 'bookmarklets/old/'));
 
-gulp.task('transform-content', ['build-bookmarklets', 'build-launcher'], transformContent(gulp));
+gulp.task('build-launcher', ['build-bookmarklets'], buildLauncher(gulp));
+
+gulp.task('transform-content', 
+    [
+        'build-bookmarklets-old', 
+        'build-bookmarklets', 
+        //'build-launcher'
+    ], 
+    transformContent(gulp));
 
 gulp.task('copy-static',  ['transform-content'], copyStatic(gulp));
 

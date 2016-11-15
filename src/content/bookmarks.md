@@ -2,7 +2,7 @@
 page: bookmarks
 title: Bookmarks
 short_title: Bookmarks
-index: 2
+index: 5
 template: default.hbt
 ---
 

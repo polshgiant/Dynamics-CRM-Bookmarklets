@@ -1,4 +1,2 @@
-(function (formContext) {
-    if (!formContext) {
-        return;
-    }
+(function () {
+    function bookmarklet(global, xrmWin, Xrm) {  
