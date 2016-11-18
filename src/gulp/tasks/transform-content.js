@@ -1,46 +1,25 @@
+// gulp related
 var _ = require('lodash'),
-    Handlebars = require('handlebars'),
-    gulpsmith = require('gulpsmith'),
     frontMatter = require('gulp-front-matter'),
+    populateBookmarkletHolder = require('../plugins/populate-bookmarklet-holder'),
+    assignPaths = require('../plugins/assign-paths');
+    
+// Metalsmith related
+var gulpsmith = require('gulpsmith'),
     markdown = require('metalsmith-markdown'),
     templates = require('metalsmith-templates'),
     collections = require('metalsmith-collections'),
-    bookmarkletReplace = require('../plugins/bookmarklet'),
-    assignPaths = require('../plugins/assign-paths'),
-    collectionsTask,
-    templatesTask,
-    insertSnippets;
+    Handlebars = require('handlebars'),
+    drafts = require('../plugins/drafts');
     
+
 // Equals helper because Handlebars feels like it must be logicless :(
 Handlebars.registerHelper('equals', function (a, b, options) {
+    console.log("HANDLEBARS HELPER: ", a, b);
     if (a === b) {
         return options.fn(this);
     }
     return options.inverse(this);
-});
-
-collectionsTask = collections({
-    pages: {
-        pattern: '*.md',
-        sortBy: 'index',
-        refer: false
-    }
-});
-
-templatesTask = templates({
-    engine: 'handlebars',
-    directory: './src/content/templates/',
-    partials: {
-        'github-link': 'partials/github-link',
-        'google-analytics': 'partials/google-analytics',
-        'header': 'partials/header',
-        'navigation': 'partials/navigation',
-        'scripts': 'partials/scripts'
-    }
-});
-
-insertSnippets = bookmarkletReplace({
-    pattern: './dist/bookmarklets/**/*.js',
 });
 
 module.exports = function defineTask(gulp) {
@@ -56,16 +35,36 @@ module.exports = function defineTask(gulp) {
             .pipe(
                 // Order of operations is important here
                 gulpsmith()
+                    // Remove draft files
+                    .use(drafts())
                     // Group the files so we can build navigation
-                    .use(collectionsTask)
+                    .use(collections({
+                        pages: {
+                            pattern: '*.md',
+                            sortBy: 'index',
+                            refer: false
+                        }
+                    }))
                     // Render each markdown file as HTML
                     .use(markdown())
                     // Insert Code Snippets
-                    .use(insertSnippets)
+                    .use(populateBookmarkletHolder({
+                        pattern: './dist/bookmarklets/**/*.js',
+                    }))
                     // Permalinks jacks things up, so assign our own paths
                     .use(assignPaths())
                     // Encapsulate each markdown file in its template
-                    .use(templatesTask)
+                    .use(templates({
+                        engine: 'handlebars',
+                        directory: './src/content/templates/',
+                        partials: {
+                            'github-link': 'partials/github-link',
+                            'google-analytics': 'partials/google-analytics',
+                            'header': 'partials/header',
+                            'navigation': 'partials/navigation',
+                            'scripts': 'partials/scripts'
+                        }
+                    }))
             )
             .pipe(gulp.dest('./dist/site/'));
     };

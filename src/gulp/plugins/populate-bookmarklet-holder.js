@@ -8,14 +8,17 @@ var _ = require('lodash'),
 // Use handlebars like syntax
 _.templateSettings.interpolate = /{{([\s\S]+?)}}/g
 
-template = _.template([
+/*template = _.template([
     "<a href='javascript:{{ Script }}' class='card bookmarklet' title='Drag me to your bookmarks bar!'>",
         "<div class='card-block'>",
             "<header class='bookmarklet-header'>{{ Title }}</header>",
             "<span class='card-text bookmarklet-description' data-description='{{ Description }}'></span>",
         "</div>",
     "</a>"
-].join(''));
+].join(''));*/
+template = fs.readFileSync('./src/content/templates/partials/bookmarklet-link.hbt', 'utf8');
+//console.log(template);
+template = _.template(template);
 
 function processFiles(files, snippets, fileFormat) {
     var contents,
@@ -30,29 +33,36 @@ function processFiles(files, snippets, fileFormat) {
         return path.extname(fileName) === '.html';
     }).each(function (file, fileName) {
         contents = file.contents.toString(fileFormat);
-        //matches;
+        
+
+        if(file.page !== "index" && file.page !== "record-related")
+            return;
 
         console.log("file.page: ", file.page);
+        //console.log("    contents: ", contents.slice(150, -200));
         
         _.each(snippets, function (snippet) {
             
-            console.log("snippet: ", snippet);
-            
-            snippetName = path.basename(snippet, '.js').replace(/-/g, '\\-');
-            r = new RegExp('\\[bookmarklet file=&quot;' + snippetName + 
-                '&quot;[\\s]+name=&quot;(.+)&quot;[\\s]+description=&quot;(.+)&quot;\\]', 'gi');
-            //snippetContents;
+            snippetName = path.basename(snippet, '.js');//.replace(/-/g, '\\-');
+            console.log("    snippet: ", snippetName);
+            r = new RegExp('\\[bookmarklet' + 
+                '[\\s]+file=&quot;' + snippetName + '&quot;' + 
+                '[\\s]+name=&quot;(.*)&quot;' + 
+                '[\\s]+description=&quot;(.*)&quot;' + 
+                '(?:[\\s]+runFrom=&quot;(.*)&quot;)?' + 
+                '[\\s]*\\]', 'gi');
 
             matches = r.exec(contents);
 
-            if (matches && matches.length === 3) {
-                console.log("matches found");
+            if (matches && matches.length >= 3) {
+                console.log("   found match:", matches[0], matches[1], matches[2], matches[3]);
 
                 snippetContents = fs.readFileSync(snippet, fileFormat);
                 contents = contents.replace(r, template({
                     Script: snippetContents,
                     Title: matches[1],
-                    Description: matches[2]
+                    Description: matches[2],
+                    RunFrom: matches[3]
                 }));
             }
         });

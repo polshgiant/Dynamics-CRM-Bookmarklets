@@ -12,7 +12,8 @@
                 {{{ contents }}}
             </div>
             <hr>
-            <sub>&copy; <script type="text/javascript">document.write(new Date().getFullYear());</script> Jeff Klosinski</sub>
+            <sub>&copy; <script type="text/javascript">
+                document.write(new Date().getFullYear());</script> Jeff Klosinski</sub>
         </div>
 
     </div>

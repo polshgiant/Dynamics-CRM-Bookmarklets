@@ -2,7 +2,7 @@
 page: xrmreference
 title: Xrm.Page Reference
 short_title: Xrm.Page
-index: 3
+index: 4
 template: default.hbt
 ---
 

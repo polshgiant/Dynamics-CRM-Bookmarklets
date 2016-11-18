@@ -2,15 +2,20 @@ var esc = require('../plugins/escape'),
     hf = require('gulp-headerfooter'),
     uglify = require('gulp-uglify'),
     replace = require('gulp-replace'),
-    gutil = require('gulp-util');
+    gutil = require('gulp-util'),
+    filelog = require('gulp-filelog');
 
-module.exports = function defineTask(gulp, srcDir, destDir) {
-
-    return function buildBookmarklets() {
-        return gulp.src('./src/' + srcDir + '!(intro.js|outro.js|old)')
+module.exports = function defineTask(gulp, srcDir, destDir, introOutroDir) {
+    introOutroDir = introOutroDir || "bookmarklets/";
+    srcDir = srcDir.endsWith('/') ? srcDir : srcDir + "/";
+    
+    return function compileBookmarklets() {
+        var srcGlob = './src/' + srcDir + '!(intro.js|outro.js|old)';
+        return gulp.src(srcGlob)
+            //.pipe(filelog(srcGlob))
             //.on('end', function(){ gutil.log('gulp.src done... [' + srcDir + ']'); })
-            .pipe(hf.header('./src/' + srcDir + 'intro.js'))
-            .pipe(hf.footer('./src/' + srcDir + 'outro.js'))
+            .pipe(hf.header('./src/' + introOutroDir + 'intro.js'))
+            .pipe(hf.footer('./src/' + introOutroDir + 'outro.js'))
             //.on('end', function(){ gutil.log('header and footer done... [' + srcDir + ']'); })
             .pipe(uglify({
                 compress: {

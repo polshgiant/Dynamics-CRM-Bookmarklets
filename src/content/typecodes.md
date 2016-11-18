@@ -2,8 +2,9 @@
 page: typecodes
 title: Type Codes
 short_title: Type Codes
-index: 4
+index: 5
 template: default.hbt
+draft: true
 ---
 
 ### Search by Type Code

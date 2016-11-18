@@ -2,7 +2,7 @@
 page: index.old
 title: Bookmarklets Old
 short_title: Bookmarklets (old)
-index: 2
+index: 3
 template: default.hbt
 ---
 

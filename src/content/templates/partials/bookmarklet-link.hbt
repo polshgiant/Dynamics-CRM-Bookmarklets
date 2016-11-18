@@ -1,0 +1,42 @@
+<!--<a href='javascript:{{ Script }}' class='card bookmarklet' title='Drag me to your bookmarks bar!'>
+    <div class='card-block'>
+        <header class='bookmarklet-header'>{{ Title }}</header>
+        <span class='card-text bookmarklet-description' data-description='{{ Description }}'></span>
+    </div>
+</a>
+<div class="card">
+  <div class="card-header">
+    <ul class="nav nav-tabs card-header-tabs float-xs-left">
+      <li class="nav-item">
+        <a class="nav-link active" href="#">Main</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Details</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">Disabled</a>
+      </li>
+    </ul>
+  </div>
+  <div class="card-block">
+    <h4 class="card-title">Special title treatment</h4>
+    <header class='bookmarklet-header'>{{ Title }}</header>
+    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+    <span class='card-text bookmarklet-description' data-description='{{ Description }}'></span>
+    <a href='javascript:{{ Script }}' class='btn btn-primary bookmarklet' 
+        title='Drag me to your bookmarks bar!'>Bookmarklet</a>
+  </div>
+</div>-->
+<div class="card">
+  <div class="card-block">
+    <h5 class="card-title">{{ Title }}</h5>
+    <p class="card-text">{{ Description }}</p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item"><span class="subtext">Run from: </span>{{ RunFrom }}</li>
+  </ul>
+  <div class="card-block">
+    <a href='javascript:{{ Script }}' class='btn btn-primary bookmarklet' 
+        title='Drag me to your bookmarks bar!'>Bookmarklet</a>
+  </div>
+</div>
