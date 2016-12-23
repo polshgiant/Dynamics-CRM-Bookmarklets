@@ -21,10 +21,10 @@ gulp.task('build-launcher', ['build-bookmarklets-admin', 'build-bookmarklets-rec
 
 gulp.task('transform-content', 
     [
-        //'build-bookmarklets-old', 
+        'build-bookmarklets-old', 
         'build-bookmarklets-admin', 
-        'build-bookmarklets-record'
-        //'build-launcher'
+        'build-bookmarklets-record',
+        'build-launcher'
     ], 
     transformContent(gulp));
 

@@ -15,7 +15,7 @@ var gulpsmith = require('gulpsmith'),
 
 // Equals helper because Handlebars feels like it must be logicless :(
 Handlebars.registerHelper('equals', function (a, b, options) {
-    console.log("HANDLEBARS HELPER: ", a, b);
+    //console.log("HANDLEBARS HELPER: ", a, b);
     if (a === b) {
         return options.fn(this);
     }

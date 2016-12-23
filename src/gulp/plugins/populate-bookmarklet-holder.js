@@ -28,23 +28,23 @@ function processFiles(files, snippets, fileFormat) {
         snippetContents;
 
     
-    console.log("snippets: ", snippets);
+    //console.log("snippets: ", snippets);
     _.chain(files).filter(function filterToHtml(file, fileName) {
         return path.extname(fileName) === '.html';
     }).each(function (file, fileName) {
         contents = file.contents.toString(fileFormat);
         
 
-        if(file.page !== "index" && file.page !== "record-related")
+        if(file.page !== "index" && file.page !== "record-related") {
             return;
+        }
 
-        console.log("file.page: ", file.page);
+        //console.log("file.page: ", file.page);
         //console.log("    contents: ", contents.slice(150, -200));
         
         _.each(snippets, function (snippet) {
-            
             snippetName = path.basename(snippet, '.js');//.replace(/-/g, '\\-');
-            console.log("    snippet: ", snippetName);
+            //console.log("    snippet: ", snippetName);
             r = new RegExp('\\[bookmarklet' + 
                 '[\\s]+file=&quot;' + snippetName + '&quot;' + 
                 '[\\s]+name=&quot;(.*)&quot;' + 
@@ -55,7 +55,7 @@ function processFiles(files, snippets, fileFormat) {
             matches = r.exec(contents);
 
             if (matches && matches.length >= 3) {
-                console.log("   found match:", matches[0], matches[1], matches[2], matches[3]);
+                //console.log("   found match:", matches[0], matches[1], matches[2], matches[3]);
 
                 snippetContents = fs.readFileSync(snippet, fileFormat);
                 contents = contents.replace(r, template({
